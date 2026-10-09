@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalogo fornecedor="Editora Exemplo">
+    <livro isbn="978-85-0000-001-1">
+        <titulo>A Hora da Estrela</titulo>
+        <autor>Clarice Lispector</autor>
+        <preco>8.90</preco>
+    </livro>
+    <livro isbn="978-85-0000-002-8">
+        <titulo>Capitães da Areia</titulo>
+        <autor>Jorge Amado</autor>
+        <preco>11.30</preco>
+    </livro>
+</catalogo>

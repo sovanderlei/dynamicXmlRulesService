@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Exemplo de uso da tag <read-xml>: importa um catálogo externo para a tabela books -->
+<workflow name="ImportarCatalogoExterno">
+
+    <read-xml path="catalogo-externo.xml" var="livrosExternos" xpath="/catalogo/livro"/>
+
+    <log message="Catálogo externo contém #{#livrosExternos.size()} livros."/>
+
+    <foreach items="#livrosExternos" var="livro" index="i">
+        <db-execute sql="INSERT INTO books (title, author, price) VALUES (:title, :author, :price)">
+            <param name="title" value="#livro['titulo']"/>
+            <param name="author" value="#livro['autor']"/>
+            <param name="price" value="#toNumber(#livro['preco'])"/>
+        </db-execute>
+        <log message="[#{#i + 1}] Importado: #{#livro['titulo']}"/>
+    </foreach>
+
+    <db-query var="totalLivros" sql="SELECT COUNT(*) AS total FROM books"/>
+    <log message="Total de livros após importação: #{#totalLivros[0]['total']}"/>
+
+</workflow>

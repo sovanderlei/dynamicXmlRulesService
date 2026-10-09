@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    # banco isolado por contexto Spring de teste (evita data.sql duplicado)
+    url: jdbc:h2:mem:test-${random.uuid};DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
+
+rules:
+  output-dir: target/test-output

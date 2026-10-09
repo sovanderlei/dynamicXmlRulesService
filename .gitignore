@@ -1,0 +1,6 @@
+target/
+output/
+*.pdf
+.idea/
+*.iml
+.vscode/

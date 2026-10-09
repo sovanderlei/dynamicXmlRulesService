@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow name="ProcessamentoOfertas">
+
+    <db-query var="livrosBaratos" sql="SELECT title, price, author FROM books WHERE price &lt; :maxPrice">
+        <param name="maxPrice" value="15.00"/>
+    </db-query>
+
+    <log message="Foram encontrados #{#livrosBaratos.size()} livros na consulta."/>
+
+    <if condition="#livrosBaratos.size() > 0">
+        <then>
+            <foreach items="#livrosBaratos" var="book">
+                <if condition="#book['price'] &lt; 10.0">
+                    <then>
+                        <db-execute sql="INSERT INTO ofertas (titulo, preco) VALUES (:titulo, :preco)">
+                            <param name="titulo" value="#book['title']"/>
+                            <param name="preco" value="#book['price']"/>
+                        </db-execute>
+                    </then>
+                </if>
+            </foreach>
+
+            <generate-pdf targetPath="saida_relatorio.pdf">
+                <template><![CDATA[
+                    <html>
+                    <body>
+                        <h1>Relatório de Livros em Promoção</h1>
+                        <ul>
+                            {{#livrosBaratos}}
+                            <li><b>{{title}}</b> - R$ {{price}} ({{author}})</li>
+                            {{/livrosBaratos}}
+                        </ul>
+                    </body>
+                    </html>
+                ]]></template>
+            </generate-pdf>
+        </then>
+        <else>
+            <log message="Nenhum livro encontrado para o critério informado."/>
+        </else>
+    </if>
+
+</workflow>

@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: dynamic-xml-rules-service
+  datasource:
+    url: jdbc:h2:mem:rulesdb;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  sql:
+    init:
+      mode: always
+
+rules:
+  # Diretório base de onde a tag <read-xml> pode ler arquivos (sandbox de leitura)
+  input-dir: ./samples/xml
+  # Diretório base onde a tag <generate-pdf> pode gravar arquivos (sandbox de escrita)
+  output-dir: ./output
+  # Limites de execução para evitar workflows abusivos
+  max-steps: 10000
+  max-depth: 50
+  max-iterations: 5000
+  # Tamanho máximo (em bytes) de um XML de workflow recebido via API
+  max-workflow-size: 1048576
